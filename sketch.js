@@ -75,9 +75,16 @@ class Raqueta {
     }
 
     update() {
+        // Mueve la raqueta del jugador (izquierda) con el ratón o el toque
         if (this.x < width / 2) {
-            this.y = mouseY;
+            // En lugar de solo usar el ratón, también permitimos movimiento por toque
+            if (touches.length > 0) {
+                this.y = touches[0].y; // Usar la posición del toque en lugar del ratón
+            } else {
+                this.y = mouseY; // Si no hay toque, usar mouseY como de costumbre
+            }
         } else {
+            // Lógica de la computadora
             if (pelota.y > this.y) {
                 this.y += this.speed;
             } else {
@@ -94,6 +101,12 @@ class Raqueta {
             image(imagenComputadora, this.x, this.y, this.width, this.height);
         }
     }
+}
+
+// Función de p5.js que detecta el movimiento táctil
+function touchMoved() {
+    // Esto permite que la función update de la raqueta capture el movimiento
+    return false; // Evita el comportamiento por defecto del navegador
 }
 
 let pelota;
