@@ -1,0 +1,74 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Chakra Petch', sans-serif;
+    background: rgb(59, 55, 128);
+    background: radial-gradient(circle, rgba(59, 55, 128, 1) 0%, rgba(28, 101, 230, 1) 55%, rgba(0, 212, 255, 1) 100%);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+h2 {
+    color: white;
+    text-align: center;
+    margin: 0;
+    font-size: 3em;
+}
+
+p {
+    color: #2e6fc9;
+    font-weight: bolder;
+    text-shadow:
+        -1px -1px 0 rgb(255, 255, 255),
+        0.5px -0.5px 0 rgb(255, 255, 255),
+        -0.5px 0.5px 0 rgb(255, 255, 255),
+        0.5px 0.5px 0 rgb(255, 255, 255);
+    font-size: 2.3em;
+    margin: 0;
+}
+
+button {
+    align-self: center;
+    background-color: #2e6fc9;
+    color: white;
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1.5em;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #1756ae;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+button:disabled {
+    background-color: gray;
+    color: rgb(174, 174, 174);
+    cursor: not-allowed;
+}
+
+.botones {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+canvas {
+    display: block;
+    border: 5px solid white;
+    border-radius: 5px;
+}
