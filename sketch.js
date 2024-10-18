@@ -125,7 +125,7 @@ function preload() {
     imagenPelota = loadImage('/sprites/pelota.png');
     imagenRaqueta = loadImage('/sprites/raqueta1.png');
     imagenComputadora = loadImage('/sprites/raqueta2.png');
-    imagenFondo = loadImage('/sprites/fondo2.avif');
+    imagenFondo = loadImage('/sprites/fondo.jpg');
     sonidoRaqueta = loadSound('/assets/bounce.wav');
     sonidoGoal = loadSound('/assets/jingle_win_synth_02.wav');
 }

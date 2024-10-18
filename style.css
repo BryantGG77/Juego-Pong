@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@100..900&display=swap');
+
+:root {
+    --color-principal: #06bf02;
+    --fuente-principal: 'Lexend Mega', sans-serif;
+}
+
+
 html,
 body {
     margin: 0;
@@ -7,48 +15,60 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Chakra Petch', sans-serif;
-    background: rgb(59, 55, 128);
-    background: radial-gradient(circle, rgba(59, 55, 128, 1) 0%, rgba(28, 101, 230, 1) 55%, rgba(0, 212, 255, 1) 100%);
+    font-family: var(--fuente-principal);
+    background-image: url('sprites/fondo2.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 main {
-    padding: 0 20px;
+    padding: 20px 20px;
     display: flex;
     align-items: center;
-    flex-direction: column;
-    gap: 30px;
+    justify-content: center;
+    flex-direction: column-reverse;
+    border: 2px solid var(--color-principal);
+    border-radius: 25px;
+    backdrop-filter: blur(18px);
+    gap: 20px;
 }
 
 h2 {
     color: white;
     text-align: center;
+    font-weight: bold;
     margin: 0;
-    font-size: 5em;
+    font-size: 6em;
+    text-shadow: var(--color-principal) 0 0 22px;
 }
 
 p {
-    color: #ffffff;
-    font-weight: bolder;
+    color: white;
     font-size: 4rem;
+    font-weight: bold;
+    padding: 0 50px;
     margin: 0;
-    text-align: center;
+    /* text-align: center; */
+    text-shadow: var(--color-principal) 0 0 22px;
+
 }
 
 button {
     align-self: center;
-    background-color: #2e6fc9;
+    box-shadow: var(--color-principal) 0 0 22px;
+    background-color: var(--color-principal);
     color: white;
-    font-family: 'Chakra Petch', sans-serif;
+    font-family: var(--fuente-principal);
     font-size: 3.5em;
-    padding: 10px 20px;
+    font-weight: bold;
+    padding: 20px 40px;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #1756ae;
+    background-color: #029400;
     color: white;
     transition: all 0.3s ease;
 }
@@ -67,8 +87,11 @@ button:disabled {
 
 canvas {
     display: block;
-    border: 5px solid white;
-    border-radius: 5px;
+    border-top: 10px solid var(--color-principal);
+    border-bottom: 10px solid var(--color-principal);
+    -webkit-box-shadow: 0px 0px 22px 0px rgba(6, 191, 2, 1);
+    -moz-box-shadow: 0px 0px 22px 0px rgba(6, 191, 2, 1);
+    box-shadow: 0px 0px 22px 0px rgba(6, 191, 2, 1);
 }
 
 @media (min-width: 768px) {
@@ -78,8 +101,7 @@ canvas {
     }
 
     h2 {
-        text-align: center;
-        font-size: 3.5em;
+        font-size: 8rem;
     }
 
     p {
@@ -88,6 +110,6 @@ canvas {
     }
 
     button {
-        font-size: 1.5em;
+        font-size: 2rem;
     }
 }
