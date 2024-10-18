@@ -122,12 +122,12 @@ function colision(cx, cy, diameter, rx, ry, rw, rh) {
 }
 
 function preload() {
-    imagenPelota = loadImage('pelota.png');
-    imagenRaqueta = loadImage('raqueta1.png');
-    imagenComputadora = loadImage('raqueta2.png');
-    imagenFondo = loadImage('fondo2.avif');
-    sonidoRaqueta = loadSound('bounce.wav');
-    sonidoGoal = loadSound('jingle_win_synth_02.wav');
+    imagenPelota = loadImage('/sprites/pelota.png');
+    imagenRaqueta = loadImage('/sprites/raqueta1.png');
+    imagenComputadora = loadImage('/sprites/raqueta2.png');
+    imagenFondo = loadImage('/sprites/fondo2.avif');
+    sonidoRaqueta = loadSound('/assets/bounce.wav');
+    sonidoGoal = loadSound('/assets/jingle_win_synth_02.wav');
 }
 
 function setup() {
