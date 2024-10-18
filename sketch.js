@@ -32,7 +32,7 @@ class Pelota {
             } else {
                 puntosJugador++;
             }
-            narrarPuntos();
+            // narrarPuntos();
             this.reset();
         }
 
@@ -126,8 +126,8 @@ function preload() {
     imagenRaqueta = loadImage('/sprites/raqueta1.png');
     imagenComputadora = loadImage('/sprites/raqueta2.png');
     imagenFondo = loadImage('/sprites/fondo.jpg');
-    sonidoRaqueta = loadSound('/assets/bounce.wav');
-    sonidoGoal = loadSound('/assets/jingle_win_synth_02.wav');
+    sonidoRaqueta = loadSound('/assets/bright-bounce.wav');
+    sonidoGoal = loadSound('/assets/objective-complete.wav');
 }
 
 function setup() {
@@ -147,47 +147,47 @@ function iniciarJuego() {
 }
 
 
-let vocesDisponibles = [];
+// let vocesDisponibles = [];
 
-// Cargar las voces disponibles y almacenarlas
-speechSynthesis.onvoiceschanged = function () {
-    vocesDisponibles = speechSynthesis.getVoices();
-};
+// // Cargar las voces disponibles y almacenarlas
+// speechSynthesis.onvoiceschanged = function () {
+//     vocesDisponibles = speechSynthesis.getVoices();
+// };
 
-function narrarPuntos() {
-    let mensaje;
+// function narrarPuntos() {
+//     let mensaje;
 
-    // Verificar si alguien ha llegado a 10 puntos y narrar al ganador
-    if (puntosJugador >= 10) {
-        mensaje = new SpeechSynthesisUtterance("¡Ganaste! Felicidades.");
-    } else if (puntosComputadora >= 10) {
-        mensaje = new SpeechSynthesisUtterance("La computadora ha ganado. Mejor suerte la próxima vez.");
-    } else {
-        mensaje = new SpeechSynthesisUtterance(`Jugador ${puntosJugador}, Computadora ${puntosComputadora}`);
-    }
+//     // Verificar si alguien ha llegado a 10 puntos y narrar al ganador
+//     if (puntosJugador >= 10) {
+//         mensaje = new SpeechSynthesisUtterance("¡Ganaste! Felicidades.");
+//     } else if (puntosComputadora >= 10) {
+//         mensaje = new SpeechSynthesisUtterance("La computadora ha ganado. Mejor suerte la próxima vez.");
+//     } else {
+//         mensaje = new SpeechSynthesisUtterance(`Jugador ${puntosJugador}, Computadora ${puntosComputadora}`);
+//     }
 
-    mensaje.lang = 'es-ES'; // Configura el idioma (puedes cambiarlo si lo deseas)
-    mensaje.rate = 2; // Velocidad más rápida
+//     mensaje.lang = 'es-ES'; // Configura el idioma (puedes cambiarlo si lo deseas)
+//     mensaje.rate = 2; // Velocidad más rápida
 
-    // Asegurarse de que las voces ya están cargadas
-    const vozElegida = vocesDisponibles.find(voz => voz.name === 'Microsoft Pablo - Spanish (Spain)'); // Cambia aquí la voz deseada
-    if (vozElegida) {
-        mensaje.voice = vozElegida;
-    }
+//     // Asegurarse de que las voces ya están cargadas
+//     const vozElegida = vocesDisponibles.find(voz => voz.name === 'Microsoft Pablo - Spanish (Spain)'); // Cambia aquí la voz deseada
+//     if (vozElegida) {
+//         mensaje.voice = vozElegida;
+//     }
 
-    // Retrasar la narración del marcador 1 segundo (1000 milisegundos)
-    setTimeout(() => {
-        speechSynthesis.speak(mensaje);
-    }, 1000); // 1000 milisegundos = 1 segundo
-}
+//     // Retrasar la narración del marcador 1 segundo (1000 milisegundos)
+//     setTimeout(() => {
+//         speechSynthesis.speak(mensaje);
+//     }, 1000); // 1000 milisegundos = 1 segundo
+// }
 
 
 function dibujarContador() {
     fill(255); // Color blanco para el texto
     textAlign(CENTER, CENTER); // Alinear el texto al centro
-    textSize(32); // Tamaño del texto
+    textSize(45); // Tamaño del texto
     textFont('Chakra Petch');
-    text(`Jugador: ${puntosJugador} | Computadora: ${puntosComputadora}`, width / 2, 30); // Dibuja el texto en la posición deseada
+    text(`${puntosJugador}        ${puntosComputadora}`, width / 2, 30); // Dibuja el texto en la posición deseada
 }
 
 function mostrarGanador(ganoJugador) {
