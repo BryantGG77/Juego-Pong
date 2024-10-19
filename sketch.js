@@ -32,7 +32,6 @@ class Pelota {
             } else {
                 puntosJugador++;
             }
-            // narrarPuntos();
             this.reset();
         }
 
@@ -45,6 +44,17 @@ class Pelota {
             this.vx *= -1;
             this.vx *= 1.1;
             this.vy *= 1.1;
+
+            // Limitar la velocidad máxima
+            this.vx = constrain(this.vx, -10, 10);
+            this.vy = constrain(this.vy, -10, 10);
+
+            // Mover la pelota fuera de la raqueta para evitar que quede atrapada
+            if (this.x < width / 2) {
+                this.x = raqueta.x + raqueta.width + this.diameter / 2;
+            } else {
+                this.x = computadora.x - this.diameter / 2;
+            }
         }
     }
 
@@ -77,11 +87,10 @@ class Raqueta {
     update() {
         // Mueve la raqueta del jugador (izquierda) con el ratón o el toque
         if (this.x < width / 2) {
-            // En lugar de solo usar el ratón, también permitimos movimiento por toque
             if (touches.length > 0) {
-                this.y = touches[0].y; // Usar la posición del toque en lugar del ratón
+                this.y = touches[0].y; // Usar la posición del toque
             } else {
-                this.y = mouseY; // Si no hay toque, usar mouseY como de costumbre
+                this.y = mouseY; // Si no hay toque, usar mouseY
             }
         } else {
             // Lógica de la computadora
@@ -105,7 +114,6 @@ class Raqueta {
 
 // Función de p5.js que detecta el movimiento táctil
 function touchMoved() {
-    // Esto permite que la función update de la raqueta capture el movimiento
     return false; // Evita el comportamiento por defecto del navegador
 }
 
@@ -114,17 +122,13 @@ let raqueta;
 let computadora;
 
 function colision(cx, cy, diameter, rx, ry, rw, rh) {
-    if (cx + diameter / 2 < rx) return false;
-    if (cy + diameter / 2 < ry) return false;
-    if (cx - diameter / 2 > rx + rw) return false;
-    if (cy - diameter / 2 > ry + rh) return false;
-    return true;
+    return cx + diameter / 2 > rx && cx - diameter / 2 < rx + rw && cy + diameter / 2 > ry && cy - diameter / 2 < ry + rh;
 }
 
 function preload() {
-    imagenPelota = loadImage('/sprites/pelota.png');
-    imagenRaqueta = loadImage('/sprites/raqueta1.png');
-    imagenComputadora = loadImage('/sprites/raqueta2.png');
+    imagenPelota = loadImage('/sprites/pelota2.png');
+    imagenRaqueta = loadImage('/sprites/raqueta3.png');
+    imagenComputadora = loadImage('/sprites/raqueta3.png');
     imagenFondo = loadImage('/sprites/fondo.jpg');
     sonidoRaqueta = loadSound('/assets/bright-bounce.wav');
     sonidoGoal = loadSound('/assets/objective-complete.wav');
@@ -132,9 +136,9 @@ function preload() {
 
 function setup() {
     createCanvas(800, 400);
-    pelota = new Pelota(400, 200, 50, 5, 5);
-    raqueta = new Raqueta(20, 150, 20, 100, 5);
-    computadora = new Raqueta(760, 150, 20, 100, 5);
+    pelota = new Pelota(400, 200, 40, 5, 5);
+    raqueta = new Raqueta(20, 150, 25, 110, 5);
+    computadora = new Raqueta(750, 150, 25, 110, 5);
 
     // Evento para iniciar el juego
     const botonJugar = document.getElementById('jugar');
@@ -146,91 +150,54 @@ function iniciarJuego() {
     document.getElementById('jugar').disabled = true; // Desactiva el botón
 }
 
-
-// let vocesDisponibles = [];
-
-// // Cargar las voces disponibles y almacenarlas
-// speechSynthesis.onvoiceschanged = function () {
-//     vocesDisponibles = speechSynthesis.getVoices();
-// };
-
-// function narrarPuntos() {
-//     let mensaje;
-
-//     // Verificar si alguien ha llegado a 10 puntos y narrar al ganador
-//     if (puntosJugador >= 10) {
-//         mensaje = new SpeechSynthesisUtterance("¡Ganaste! Felicidades.");
-//     } else if (puntosComputadora >= 10) {
-//         mensaje = new SpeechSynthesisUtterance("La computadora ha ganado. Mejor suerte la próxima vez.");
-//     } else {
-//         mensaje = new SpeechSynthesisUtterance(`Jugador ${puntosJugador}, Computadora ${puntosComputadora}`);
-//     }
-
-//     mensaje.lang = 'es-ES'; // Configura el idioma (puedes cambiarlo si lo deseas)
-//     mensaje.rate = 2; // Velocidad más rápida
-
-//     // Asegurarse de que las voces ya están cargadas
-//     const vozElegida = vocesDisponibles.find(voz => voz.name === 'Microsoft Pablo - Spanish (Spain)'); // Cambia aquí la voz deseada
-//     if (vozElegida) {
-//         mensaje.voice = vozElegida;
-//     }
-
-//     // Retrasar la narración del marcador 1 segundo (1000 milisegundos)
-//     setTimeout(() => {
-//         speechSynthesis.speak(mensaje);
-//     }, 1000); // 1000 milisegundos = 1 segundo
-// }
-
-
 function dibujarContador() {
     fill(255); // Color blanco para el texto
-    textAlign(CENTER, CENTER); // Alinear el texto al centro
-    textSize(45); // Tamaño del texto
+    textAlign(CENTER, CENTER);
+    textSize(45);
     textFont('Chakra Petch');
-    text(`${puntosJugador}        ${puntosComputadora}`, width / 2, 30); // Dibuja el texto en la posición deseada
+    text(`${puntosJugador}        ${puntosComputadora}`, width / 2, 30);
 }
 
 function mostrarGanador(ganoJugador) {
     fill(255); // Color blanco para el texto
-    textAlign(CENTER, CENTER); // Alinear el texto al centro
-    textSize(48); // Tamaño del texto del ganador
+    textAlign(CENTER, CENTER);
+    textSize(48);
     textFont('Chakra Petch');
     if (ganoJugador) {
-        text('¡Ganaste!', width / 2, height / 2); // Mensaje para el jugador
+        text('¡Ganaste!', width / 2, height / 2);
     } else {
-        text('¡Ganó la Computadora!', width / 2, height / 2); // Mensaje para la computadora
+        text('¡Ganó la Computadora!', width / 2, height / 2);
     }
 
-    // Habilitar el botón de jugar nuevamente
     let botonJugar = document.getElementById('jugar');
-    botonJugar.disabled = false; // Habilita el botón
-    botonJugar.textContent = "Volver a jugar"; // Cambia el texto del botón
-    botonJugar.addEventListener('click', reiniciarJuego); // Asocia la función de reinicio
+    botonJugar.disabled = false;
+    botonJugar.textContent = "Volver a jugar";
+    botonJugar.addEventListener('click', reiniciarJuego);
 }
 
 function reiniciarJuego() {
-    puntosJugador = 0; // Reiniciar los puntos
+    puntosJugador = 0;
     puntosComputadora = 0;
-    pelota.reset(); // Reiniciar la posición de la pelota
-    loop(); // Reiniciar el juego
-    juegoIniciado = true; // Cambiar el estado del juego
-    document.getElementById('jugar').disabled = true; // Desactiva el botón nuevamente
+    pelota.reset();
+    loop();
+    juegoIniciado = true;
+    document.getElementById('jugar').disabled = true;
 }
+
 function draw() {
     image(imagenFondo, 0, 0, width, height);
 
     if (juegoIniciado) {
-        dibujarContador(); // Llama a la función para dibujar el contador
+        dibujarContador();
 
-        // Verifica si alguien ha llegado a 10 puntos
         if (puntosJugador >= 10) {
-            mostrarGanador(true); // El jugador gana
-            noLoop(); // Detiene el juego
-            return; // Sale de la función
+            mostrarGanador(true);
+            noLoop();
+            return;
         } else if (puntosComputadora >= 10) {
-            mostrarGanador(false); // La computadora gana
-            noLoop(); // Detiene el juego
-            return; // Sale de la función
+            mostrarGanador(false);
+            noLoop();
+            return;
         }
 
         pelota.update();
