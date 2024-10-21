@@ -94,6 +94,7 @@ button:disabled {
 
 canvas {
     display: block;
+    margin-left: 50px;
     border-top: 10px solid var(--color-principal);
     border-bottom: 10px solid var(--color-principal);
     -webkit-box-shadow: 0px 0px 22px 0px rgba(6, 191, 2, 1);

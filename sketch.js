@@ -150,24 +150,8 @@ function setup() {
     // Evento para iniciar el juego
     const botonJugar = document.getElementById('jugar');
     botonJugar.addEventListener('click', iniciarJuego);
-
-    // Agregamos un eventListener para el toque en toda la ventana
-    window.addEventListener('touchmove', moverRaquetaJugador);
 }
 
-function moverRaquetaJugador(event) {
-    // Prevenimos el comportamiento por defecto
-    event.preventDefault();
-
-    // Obtenemos la posición del toque
-    let toque = event.touches[0];
-
-    // Ajustamos la posición de la raqueta basándonos en la posición vertical del toque
-    raqueta.y = toque.clientY - raqueta.height / 2;
-
-    // Aseguramos que la raqueta no se salga de los límites del canvas
-    raqueta.y = constrain(raqueta.y, 0, height - raqueta.height);
-}
 function iniciarJuego() {
     juegoIniciado = true; // Cambia el estado del juego
     document.getElementById('jugar').disabled = true; // Desactiva el botón
