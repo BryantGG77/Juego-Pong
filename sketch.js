@@ -114,8 +114,15 @@ class Raqueta {
 
 // Función de p5.js que detecta el movimiento táctil
 function touchMoved() {
+    // Mueve la raqueta del jugador (izquierda) según la posición vertical del toque en cualquier parte de la pantalla
+    raqueta.y = touches[0].y - raqueta.height / 2; // Ajusta la raqueta para que el toque esté centrado
+
+    // Asegura que la raqueta no se salga de los límites del canvas
+    raqueta.y = constrain(raqueta.y, 0, height - raqueta.height);
+
     return false; // Evita el comportamiento por defecto del navegador
 }
+
 
 let pelota;
 let raqueta;
