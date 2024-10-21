@@ -118,4 +118,8 @@ canvas {
     button {
         font-size: 2rem;
     }
+
+    canvas {
+        margin-left: 0;
+    }
 }
