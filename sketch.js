@@ -47,12 +47,12 @@ class Pelota {
 
             sonidoRaqueta.play();
             this.vx *= -1;
-            this.vx *= 1.1; // Incrementa velocidad en el eje x
-            this.vy *= 1.1; // Incrementa velocidad en el eje y
+            this.vx *= 1.2; // Incrementa velocidad en el eje x
+            this.vy *= 1.2; // Incrementa velocidad en el eje y
 
             // Limitar la velocidad máxima a un valor más alto
-            this.vx = constrain(this.vx, -15, 15); // Aumenta el límite máximo de velocidad
-            this.vy = constrain(this.vy, -15, 15); // Aumenta el límite máximo de velocidad
+            this.vx = constrain(this.vx, -20, 20); // Aumenta el límite máximo de velocidad
+            this.vy = constrain(this.vy, -20, 20); // Aumenta el límite máximo de velocidad
 
             // Mover la pelota fuera de la raqueta para evitar que quede atrapada
             if (this.x < width / 2) {
@@ -112,8 +112,8 @@ class Raqueta {
 
     adjustSpeed() {
         // Incrementa la velocidad de la raqueta con el tiempo o con los puntos
-        let maxSpeed = 10; // Velocidad máxima permitida
-        let difficultyFactor = 0.3; // Ajusta este valor para incrementar la dificultad
+        let maxSpeed = 20; // Velocidad máxima permitida
+        let difficultyFactor = 2; // Ajusta este valor para incrementar la dificultad
         this.speed = this.baseSpeed + (puntosComputadora + puntosJugador) * difficultyFactor;
         this.speed = constrain(this.speed, this.baseSpeed, maxSpeed); // Limitar la velocidad máxima
     }
