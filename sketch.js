@@ -25,6 +25,7 @@ class Pelota {
         this.y += this.vy;
         this.rotation += this.vx + this.vy;
 
+        // Verifica si la pelota ha salido por los lados (punto para el jugador o computadora)
         if (this.x > width - this.diameter / 2 || this.x < this.diameter / 2) {
             sonidoGoal.play();
             if (this.x < width / 2) {
@@ -35,19 +36,23 @@ class Pelota {
             this.reset();
         }
 
+        // Rebote en los bordes superior e inferior
         if (this.y > height - this.diameter / 2 || this.y < this.diameter / 2) {
             this.vy *= -1;
         }
 
-        if (colision(this.x, this.y, this.diameter, raqueta.x, raqueta.y, raqueta.width, raqueta.height) || colision(this.x, this.y, this.diameter, computadora.x, computadora.y, computadora.width, computadora.height)) {
+        // Colisión con las raquetas
+        if (colision(this.x, this.y, this.diameter, raqueta.x, raqueta.y, raqueta.width, raqueta.height) ||
+            colision(this.x, this.y, this.diameter, computadora.x, computadora.y, computadora.width, computadora.height)) {
+
             sonidoRaqueta.play();
             this.vx *= -1;
-            this.vx *= 1.1;
-            this.vy *= 1.1;
+            this.vx *= 1.1; // Incrementa velocidad en el eje x
+            this.vy *= 1.1; // Incrementa velocidad en el eje y
 
-            // Limitar la velocidad máxima
-            this.vx = constrain(this.vx, -10, 10);
-            this.vy = constrain(this.vy, -10, 10);
+            // Limitar la velocidad máxima a un valor más alto
+            this.vx = constrain(this.vx, -15, 15); // Aumenta el límite máximo de velocidad
+            this.vy = constrain(this.vy, -15, 15); // Aumenta el límite máximo de velocidad
 
             // Mover la pelota fuera de la raqueta para evitar que quede atrapada
             if (this.x < width / 2) {
@@ -59,10 +64,10 @@ class Pelota {
     }
 
     reset() {
-        this.x = 400;
-        this.y = 200;
-        this.vx = 5 * (Math.random() < 0.5 ? -1 : 1);
-        this.vy = 5 * (Math.random() < 0.5 ? -1 : 1);
+        this.x = width / 2;
+        this.y = height / 2;
+        this.vx = 5 * (Math.random() < 0.5 ? -1 : 1); // Velocidad inicial aleatoria en el eje x
+        this.vy = 5 * (Math.random() < 0.5 ? -1 : 1); // Velocidad inicial aleatoria en el eje y
         this.rotation = 0;
     }
 
@@ -81,7 +86,8 @@ class Raqueta {
         this.y = y;
         this.width = width;
         this.height = height;
-        this.speed = speed;
+        this.baseSpeed = speed; // Velocidad base
+        this.speed = speed; // Velocidad actual
     }
 
     update() {
@@ -93,14 +99,23 @@ class Raqueta {
                 this.y = mouseY; // Si no hay toque, usar mouseY
             }
         } else {
-            // Lógica de la computadora
-            if (pelota.y > this.y) {
+            // Lógica de la computadora (derecha)
+            this.adjustSpeed(); // Aumentar velocidad según el progreso del juego
+            if (pelota.y > this.y + this.height / 2) {
                 this.y += this.speed;
             } else {
                 this.y -= this.speed;
             }
         }
-        this.y = constrain(this.y, 0, height - this.height);
+        this.y = constrain(this.y, 0, height - this.height); // Limitar dentro del canvas
+    }
+
+    adjustSpeed() {
+        // Incrementa la velocidad de la raqueta con el tiempo o con los puntos
+        let maxSpeed = 10; // Velocidad máxima permitida
+        let difficultyFactor = 0.3; // Ajusta este valor para incrementar la dificultad
+        this.speed = this.baseSpeed + (puntosComputadora + puntosJugador) * difficultyFactor;
+        this.speed = constrain(this.speed, this.baseSpeed, maxSpeed); // Limitar la velocidad máxima
     }
 
     draw() {
@@ -111,6 +126,7 @@ class Raqueta {
         }
     }
 }
+
 
 // Función de p5.js que detecta el movimiento táctil
 function touchMoved() {
